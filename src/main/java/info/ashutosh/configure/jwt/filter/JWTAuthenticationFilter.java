@@ -1,4 +1,4 @@
-package info.ashutosh.configure.jwt;
+package info.ashutosh.configure.jwt.filter;
 
 import java.io.IOException;
 

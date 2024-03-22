@@ -35,13 +35,24 @@ public class JWTService {
 				.expiration(expirationAt).signWith(getPublicSigningKey(), Jwts.SIG.HS256).compact();
 
 	}
-	
-//	public boolean isTokenvalid(String token) {
-//		
-//	}
+
+	public boolean isTokenvalid(String token, UserDetails userDetails) {
+		String extrectUsername = extrectUsername(token);
+		return (extrectUsername.equals(userDetails.getUsername()) && isTokenExpired(token));
+
+	}
+
+	private boolean isTokenExpired(String token) {
+		return extrectExpiretion(token).before(new Date());
+
+	}
 
 	public String extrectUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
+	}
+
+	public Date extrectExpiretion(String token) {
+		return extractClaim(token, Claims::getExpiration);
 	}
 
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
